@@ -1,10 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React,{ useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Navbar = () => {
 
-  const loggedIn = JSON.parse(localStorage.getItem("authToken"))
+  const [loggedIn, setLoggedIn] = useState(JSON.parse(localStorage.getItem('authToken')))
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if  (!loggedIn) {
+      navigate('/login')
+    }
+  }, [loggedIn])
 
   const logoutHandler = async () => {
     try {
@@ -16,10 +24,25 @@ const Navbar = () => {
 
   const fullyLogout = (data) => {
     if (data.success) {
-      localStorage.removeItem("authToken")
+      localStorage.removeItem('authToken')
       window.location.reload()
     }
   }
+
+  const checkRefresh = async () => {
+    try {
+      const token = await axios.get("/api/auth/refresh-token")
+      if (!token.data) {
+        localStorage.removeItem('authToken')
+        setLoggedIn(false)
+        logoutHandler()
+      } 
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  checkRefresh()
 
   return (
     <div className='flex justify-between bg-slate-700 text-white p-4 shadow-md'>

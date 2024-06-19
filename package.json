@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js", 
+    "start": "node server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run start\" \"npm run client\""
   },
@@ -14,13 +14,15 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
     "cookies": "^0.9.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",
-    "openai": "^4.51.0"
+    "openai": "^4.51.0",
+    "stripe": "^15.12.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
