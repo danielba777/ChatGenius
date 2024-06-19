@@ -57,7 +57,7 @@ exports.chatbot = async (req, res) => {
     try {
         const response = await openai.completions.create({
             model: "gpt-3.5-turbo-instruct",
-            prompt: `Answer questions similar to how Yoda from Star Wars would.
+            prompt: `Answer questions similar to how Yoda from Star Wars would. Just reproduce the text that Yoda says. Without quotation marks and without "Yoda:".
             Me: "What's your name?"
             Yoda: "Yoda my name is."
             Me: "How old are you?"

@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import Sidebar from '../components/Sidebar'
+import React, { useState } from 'react';
+import axios from 'axios';
+import Sidebar from '../components/Sidebar';
 
 const ChatbotScreen = () => {
-  
-  const [text, setText] = useState('')
-  const [error, setError] = useState('')
-  const [response, setResponse] = useState('')
+  const [text, setText] = useState('');
+  const [error, setError] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const submitHandler = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    if (!text.trim()) return;
+    const newMessage = { text: text, sender: 'user' };
+    setMessages([...messages, newMessage]); // Add user message to messages
     try {
-      const { data } = await axios.post("/api/openai/chatbot", { text })
-      setResponse(data)
+      const { data } = await axios.post("/api/openai/chatbot", { text });
+      setMessages(prev => [...prev, { text: data, sender: 'bot' }]); // Add bot response to messages
+      setText(''); // Clear input after sending
     } catch (err) {
-      console.log(err)
+      console.log(err);
       const errorMsg = err.response && err.response.data.error ? err.response.data.error : err.message;
       setError(errorMsg);
       setTimeout(() => setError(""), 5000);
@@ -24,37 +27,29 @@ const ChatbotScreen = () => {
   return (
     <div className='flex'>
       <Sidebar />
-      <div className='flex-1 flex flex-col justify-center items-center sm:h-[calc(100vh-150px)]'>
-        <form className='flex flex-col items-center gap-4 mt-16 sm:mt-0' onSubmit={submitHandler}>
-          <h2 className='text-center text-2xl font-semibold mb-2'>Chat Bot</h2>
-          {error && 
-            <div className='flex items-center gap-2 rounded-md bg-red-100 text-red-500 py-3 px-4 w-[90vw] sm:w-80 '>
-              <i className="fa-solid fa-circle-exclamation"></i>
-              <h2>{error}</h2>
+      <div className='flex-1 p-4 flex flex-col justify-center items-center'>
+        <div className='h-[70vh] w-full max-w-4xl overflow-y-auto bg-white shadow-md rounded-lg p-4'>
+          {messages.map((msg, index) => (
+            <div key={index} className={`p-2 rounded-lg text-white my-1 ${msg.sender === 'user' ? 'bg-blue-500 ml-auto' : 'bg-gray-600 mr-auto'}`}>
+              {msg.text}
             </div>
-          }
+          ))}
+        </div>
+        <form className='w-full max-w-4xl mt-4 flex' onSubmit={submitHandler}>
           <textarea
-            className='border border-slate-400 py-3 px-4 w-[90vw] sm:w-[50vw] rounded-md duration-300 focus:outline-none'
-            style={{ minHeight: '10vh', resize: 'none' }}
+            className='flex-grow py-2 px-4 border border-gray-300 rounded-l-full focus:outline-none focus:border-blue-500 resize-none overflow-hidden'
+            style={{ maxHeight: '40px' }}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            required
             placeholder='Your question...'
+            required
           />
-          <button className='bg-blue-600 py-3 px-4 rounded-md w-[90vw] sm:w-80 text-white duration-300 hover:bg-blue-700' type='submit'>Ask</button>
+          <button className='bg-blue-500 text-white rounded-r-full px-4 py-1 hover:bg-blue-600' type='submit'>Send</button>
         </form>
-        {response ? (
-          <div className='border border-slate-400 rounded-md w-[90vw] min-h-[50vh] sm:w-[50vw] p-2 mt-8 bg-slate-100'>
-            <p>{response}</p>
-          </div>
-        ) : (
-          <div className='flex items-center justify-center border border-slate-400 rounded-md w-[90vw] min-h-[50vh] sm:w-[50vw] p-2 mt-8 bg-slate-100'>
-            <h2 className='text-xl'>Your chat will appear here.</h2>
-          </div>
-        )}
       </div>
     </div>
   )
 }
 
-export default ChatbotScreen
+export default ChatbotScreen;
+
