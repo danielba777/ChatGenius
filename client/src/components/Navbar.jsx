@@ -36,7 +36,41 @@ const Navbar = () => {
         localStorage.removeItem('authToken')
         setLoggedIn(false)
         logoutHandler()
-      } 
+      } else {
+        const config = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token.data}` } }
+        await axios.get("/api/auth/subscription", config).then(res => checkSub(res.data))
+        setLoggedIn(true)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const checkSub = (data) => {
+    if (data.subscription) {
+      localStorage.setItem("sub", JSON.stringify(data.subscription))
+    } else {
+      localStorage.removeItem("sub")
+    }
+  }
+
+  const createPortal = async () => {
+    try {
+      const token = await axios.get("/api/auth/refresh-token")
+
+      if (token.data) {
+        const config = { headers: {"Content-Type": "application/json", Authorization: `Bearer ${token.data}`}}
+        const customerId = await axios.get("/api/auth/customer", config)
+
+        if (customerId.data.customerId) {
+          const portal = await axios.post("/api/stripe/portal", { customerId: customerId.data.customerId }, config)
+
+          if (portal.data.url) {
+            window.open(portal.data.url, "_self")
+          }
+        }
+      }
+
     } catch (err) {
       console.log(err)
     }
@@ -47,12 +81,20 @@ const Navbar = () => {
   return (
     <div className='flex justify-between bg-slate-700 text-white p-4 shadow-md'>
       <Link to="/">
-        <h1 className='font-semibold text-xl'>ChatGenius</h1>
+        <div className='flex items-center gap-1'>
+          <i className='fa-solid fa-brain text-2xl'></i>
+          <h1 className='font-semibold text-xl'>ChatGenius</h1>
+        </div>
       </Link>
       { loggedIn ? (
-          <Link to="/" onClick={logoutHandler}>
-            <h2 className='font-semibold duration-300 hover:text-slate-300'>Logout</h2>
-          </Link>
+          <div className='flex items-center gap-6 text-xl'>
+            <button onClick={createPortal}>
+              <i className='fa-solid fa-user hover:text-slate-300' />
+            </button>
+            <button onClick={logoutHandler}>
+              <i className='fa-solid fa-right-to-bracket hover:text-slate-300' />
+            </button>
+          </div>
         ) : (
           <div className='flex items-center gap-4'>
             <Link to="/register">

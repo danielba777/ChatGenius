@@ -71,9 +71,10 @@ exports.getRefreshToken = async (req, res, next) => {
 exports.getSubscription = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.id)
+        console.log("getSubscription für User: ", user)
+        console.log("-> ", user.subscription)
         res.status(200).json({ subscription: user.subscription })
     } catch (err) {
-        console.log("ERROR in auth.js Controller -> getSubscription()")
         next(err)
     }
 }

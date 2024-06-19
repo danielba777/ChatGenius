@@ -8,6 +8,8 @@ import ChatbotScreen from './screens/ChatbotScreen'
 import JsConvertScreen from './screens/JsConvertScreen'
 import Navbar from './components/Navbar'
 import ScifiScreen from './screens/ScifiScreen'
+import PrivateRoute from './routing/PrivateRoute'
+import NormalWrapper from "./routing/NormalWrapper";
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
@@ -22,11 +24,11 @@ function App() {
           <Route exact path="/" element={<HomeScreen />} />
           <Route exact path="/login" element={<LoginScreen />} />
           <Route exact path="/register" element={<RegisterScreen />} />
-          <Route exact path="/summary" element={<SummaryScreen />} />
-          <Route exact path="/paragraph" element={<ParagraphScreen />} />
-          <Route exact path="/chatbot" element={<ChatbotScreen />} />
-          <Route exact path="/js-converter" element={<JsConvertScreen />} />
-          <Route exact path="/scifi-img" element={<ScifiScreen />} />
+          <Route exact path="/summary" element={<PrivateRoute><NormalWrapper><SummaryScreen /></NormalWrapper></PrivateRoute>} />
+          <Route exact path="/paragraph" element={<PrivateRoute><NormalWrapper><ParagraphScreen /></NormalWrapper></PrivateRoute>} />
+          <Route exact path="/chatbot" element={<PrivateRoute><NormalWrapper><ChatbotScreen /></NormalWrapper></PrivateRoute>} />
+          <Route exact path="/js-converter" element={<PrivateRoute><NormalWrapper><JsConvertScreen /></NormalWrapper></PrivateRoute>} />
+          <Route exact path="/scifi-img" element={<PrivateRoute><NormalWrapper><ScifiScreen /></NormalWrapper></PrivateRoute>} />
         </Routes>
       </div>
     </Elements>

@@ -32,7 +32,7 @@ exports.protect = async (req, res, next) => {
         next()
         
     } catch (err) {
-        console.log("ERROR in auth.js Middleware -> protect()")
+        console.log("!!! ERROR in auth.js Middleware -> protect()")
         next(err)
     }
 }
