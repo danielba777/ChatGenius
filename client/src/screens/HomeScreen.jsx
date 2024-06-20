@@ -6,8 +6,11 @@ const HomeScreen = () => {
   return (
     <div className='flex'>
       <Sidebar />
-      <div>
-        
+      <div className='relative w-screen'>
+        <img src='./bg.jpeg' alt='bg' />
+        <div className='absolute'>
+          
+        </div>
       </div>
     </div>
   )
