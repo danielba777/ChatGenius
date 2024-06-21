@@ -49,8 +49,14 @@ UserSchema.methods.matchPasswords = async function (password) {
 
 // Sign JWT and return 
 UserSchema.methods.getSignedToken = function(res) {
+
+    console.log("UserSchema.methods.getSignedToken() entered...")
+
     const accessToken = jwt.sign({ id: this._id }, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.JWT_ACCESS_EXPIRE });
     const refreshToken = jwt.sign({ id: this._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRE });
+
+    console.log("accessToken: ", accessToken)
+    console.log("refreshToken: ", refreshToken)
     
     res.cookie('refreshToken', refreshToken, {
         maxAge: 86400 * 7000,

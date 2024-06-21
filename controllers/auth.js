@@ -3,9 +3,10 @@ const ErrorResponse = require('../utils/errorResponse')
 const jwt = require('jsonwebtoken')
 
 const sendToken = (user, statusCode, res) => {
-    const token = user.getSignedToken(res)
-    res.status(statusCode).json({ success: true, token })
-}
+    const token = user.getSignedToken(res);
+    console.log("Cookies gesetzt: ", res.getHeader('Set-Cookie')); // Debugging Ausgabe
+    res.status(statusCode).json({ success: true, token });
+};
 
 exports.register = async (req, res, next) => {
     const { username, email, password } = req.body
