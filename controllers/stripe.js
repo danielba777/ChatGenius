@@ -1,7 +1,7 @@
 const User = require('../models/User')
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
-const DOMAIN = "http://localhost:3000"
+const DOMAIN = "https://chatgenius.netlify.app"
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
 exports.createCheckout = async (req, res) => {
