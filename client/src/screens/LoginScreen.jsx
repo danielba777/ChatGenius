@@ -11,15 +11,16 @@ const LoginScreen = () => {
   const [password,setPassword] = useState('')
 
   const config = {
-    headers: { "Content-Type": "application/json" }
-  }
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true
+  };
 
   const submitHandler = async (e) => {
 
     e.preventDefault()
     
     try {
-      const { data } = await axios.post("https://chatgenius.onrender.com/api/auth/login", {email, password}, config)
+      const { data } = await axios.post("https://chatgenius.onrender.com/api/auth/login", { email, password }, config);
       
       if(data.token.accessToken) {
         localStorage.setItem("authToken", true)

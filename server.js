@@ -15,7 +15,8 @@ app.use(bodyParser.json({
 
 // CORS Configuration  
 app.use(cors({
-    origin: 'https://chatgenius.netlify.app', 
+    origin: 'https://chatgenius.netlify.app',
+    credentials: true,
     optionsSuccessStatus: 200
 }));
 

@@ -12,16 +12,17 @@ const RegisterScreen = () => {
   const [password,setPassword] = useState('')
 
   const config = {
-    headers: { "Content-Type": "application/json" }
-  }
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true
+  };
 
   const submitHandler = async (e) => {
 
     e.preventDefault()
     
     try {
-      await axios.post("https://chatgenius.onrender.com/api/auth/register", {username, email, password}, config)
-      navigate("/login")
+      await axios.post("https://chatgenius.onrender.com/api/auth/register", { username, email, password }, config);
+      navigate("/login");
 
     } catch (err) {
       console.log(err)
