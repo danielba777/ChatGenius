@@ -58,18 +58,25 @@ exports.logout = async (req, res) => {
 exports.getRefreshToken = async (req, res, next) => {
     try {
         console.log("Received request for refresh token");
+        console.log("Request Cookies: ", req.cookies); // Log the cookies
+
         const getToken = req.cookies.refreshToken;
         console.log("Refresh Token:", getToken);
 
         if (getToken) {
             const token = jwt.verify(getToken, process.env.JWT_REFRESH_SECRET);
+            console.log("Verified Token: ", token);
+
             const accessToken = jwt.sign({ id: token.id }, process.env.JWT_ACCESS_SECRET, { expiresIn: process.env.JWT_ACCESS_EXPIRE });
+            console.log("New Access Token: ", accessToken);
+
             res.status(200).json(accessToken);
         } else {
             throw new Error("No refresh token provided");
         }
     } catch (err) {
         console.error("Error during refresh token process:", err);
+        res.status(500).json({ message: "Internal Server Error", error: err.message }); // Return a detailed error response
         next(err);
     }
 }
