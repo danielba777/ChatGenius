@@ -18,7 +18,9 @@ exports.summarize = async (req, res) => {
             temperature: 0.5,
         });
 
-        return res.status(200).json(response.data.choices[0].text)
+        console.log("Response: ", response)
+
+        return res.status(200).json(response.choices[0].text)
 
     } catch (err) {
         console.error("Error:", err);
@@ -44,36 +46,28 @@ exports.paragraph = async (req, res) => {
         return res.status(200).json(response.choices[0].text)
 
     } catch (err) {
-        console.error("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error:", err)
+        return res.status(500).json({ message: "Internal Server Error" })
     }
 }
 
 // Start a chat
 exports.chatbot = async (req, res) => {
-
-    const { text } = req.body
+    const { text } = req.body;
 
     try {
         const response = await openai.completions.create({
             model: "gpt-3.5-turbo-instruct",
-            prompt: `Answer questions similar to how Yoda from Star Wars would. Just reproduce the text that Yoda says. Without quotation marks and without "Yoda:".
-            Me: "What's your name?"
-            Yoda: "Yoda my name is."
-            Me: "How old are you?"
-            Yoda: "Old I am. 900 years old I am."
-            Me: "What is your favorite color?"
-            Yoda: "Blue my favorite color is."
-            Me: "${text}"`,
-            max_tokens: 300,
-            temperature: 0.7,
+            prompt: `You are an all-knowing entity, providing concise and insightful answers to any question. When asked, provide clear, direct responses without using the format of a dialogue. Here's the question:
+            "${text}"`,
+            max_tokens: 150,
+            temperature: 0.5,
         });
 
-        return res.status(200).json(response.choices[0].text)
-
+        return res.status(200).json(response.choices[0].text.trim())
     } catch (err) {
-        console.error("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error:", err)
+        return res.status(500).json({ message: "Internal Server Error" })
     }
 }
 
@@ -94,7 +88,7 @@ exports.jsConverter = async (req, res) => {
 
     } catch (err) {
         console.error("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error" })
     }
 }
 
@@ -115,6 +109,6 @@ exports.scifi = async (req, res) => {
 
     } catch (err) {
         console.error("Error:", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error" })
     }
 }

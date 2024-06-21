@@ -1,6 +1,6 @@
-import { Routes, Route } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Routes, Route } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
@@ -12,7 +12,7 @@ import JsConvertScreen from './screens/JsConvertScreen'
 import Navbar from './components/Navbar'
 import ScifiScreen from './screens/ScifiScreen'
 import PrivateRoute from './routing/PrivateRoute'
-import NormalWrapper from "./routing/NormalWrapper";
+import NormalWrapper from "./routing/NormalWrapper"
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'

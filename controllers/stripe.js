@@ -5,33 +5,33 @@ const DOMAIN = "http://localhost:3000"
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
 exports.createCheckout = async (req, res) => {
-    const { priceId, sub } = req.body;
+    const { priceId, sub } = req.body
 
     try {
         let customerId;
 
         if (req.user.stripeCustomerId) {
-            customerId = req.user.stripeCustomerId;
+            customerId = req.user.stripeCustomerId
         } else {
-            const newCustomer = await stripe.customers.create({ email: req.user.email });
-            customerId = newCustomer.id;
+            const newCustomer = await stripe.customers.create({ email: req.user.email })
+            customerId = newCustomer.id
 
-            await User.findByIdAndUpdate(req.user._id, { customerId: customerId, sub: sub });
+            await User.findByIdAndUpdate(req.user._id, { customerId: customerId })
         }
 
         const session = await stripe.checkout.sessions.create({
             mode: "subscription",
             line_items: [{ price: priceId, quantity: 1 }],
             customer: customerId,
-            success_url: `${DOMAIN}/`,
+            success_url: `${DOMAIN}/summary`,
             cancel_url: `${DOMAIN}/`,
             metadata: { subscription: sub }
         });
 
         return res.status(200).json(session);
     } catch (err) {
-        console.error("Error in createCheckout: ", err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error in createCheckout: ", err)
+        return res.status(500).json({ message: "Internal Server Error" })
     }
 };
 
@@ -52,35 +52,35 @@ exports.createPortal = async (req, res) => {
 
 exports.createWebhook = async (req, res) => {
 
-    const sig = req.headers["stripe-signature"];
+    const sig = req.headers["stripe-signature"]
     let event;
-    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
     try {
-        event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
+        event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret)
     } catch (err) {
-        console.log("Webhook signature verification failed:", err.message);
-        return res.status(400).send(`Webhook Error: ${err.message}`);
+        console.log("Webhook signature verification failed:", err.message)
+        return res.status(400).send(`Webhook Error: ${err.message}`)
     }
 
-    console.log("Received event:", event.type);
+    console.log("Received event:", event.type)
 
     try {
         switch (event.type) {
             case 'checkout.session.completed': {
-                const customer_id = event.data.object.customer;
-                const subscription_status = event.data.object.metadata.subscription;
-                console.log("Customer ID:", customer_id, "Subscription Status:", subscription_status);
+                const customer_id = event.data.object.customer
+                const subscription_status = event.data.object.metadata.subscription
+                console.log("Customer ID:", customer_id, "Subscription Status:", subscription_status)
 
-                const user = await User.findOne({ customerId: customer_id });
+                const user = await User.findOne({ customerId: customer_id })
                 if (!user) {
-                    console.log("No user found with this customer ID:", customer_id);
-                    return res.status(404).send('User not found');
+                    console.log("No user found with this customer ID:", customer_id)
+                    return res.status(404).send('User not found')
                 }
 
-                user.subscription = subscription_status;
-                await user.save();
-                break;
+                user.subscription = subscription_status
+                await user.save()
+                break
             }
             case 'payment_intent.succeeded': {
                 try {
@@ -141,8 +141,8 @@ exports.createWebhook = async (req, res) => {
                 return res.status(400).end()
         }
     } catch (err) {
-        console.error("Error processing webhook:", err);
-        return res.status(500).send(`Internal Server Error: ${err.message}`);
+        console.error("Error processing webhook:", err)
+        return res.status(500).send(`Internal Server Error: ${err.message}`)
     }
-    res.json({ received: true });
+    res.json({ received: true })
 }

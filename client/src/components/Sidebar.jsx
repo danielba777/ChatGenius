@@ -15,41 +15,41 @@ const Sidebar = () => {
 
     useEffect(() => {
       const fetchSubscription = async () => {
-        const status = await checkSubscription();
+        const status = await checkSubscription()
         setSubscriptionStatus(status);
         console.log("Subscription Status: ", status)
       };
 
-      fetchSubscription();
+      fetchSubscription()
     },[])
 
   return (
-    <div className='flex flex-col justify-between w-[250px] h-[calc(100vh-64px)] bg-slate-200'>
-      <div>
-        <div className='flex justify-center items-center gap-2 text-xl mt-4'>
-          <h1>Tools</h1>
+    <div className='flex flex-row sm:flex-col justify-between sm:w-[250px] sm:h-[calc(100vh-64px)] bg-slate-200'>
+      <div className='flex flex-row gap-2 sm:gap-1 sm:flex-col overflow-x-auto p-2 sm:p-0'>
+        <div className='hidden sm:flex justify-center items-center gap-2 text-xl sm:mt-4'>
+          <h1 className='heading'>Tools</h1>
         </div>
 
         <Link to="/summary" className='flex justify-center w-full'>
-          <div className={`flex items-center gap-2 p-2 rounded-md w-10/12 mt-2 ${isActive('/summary')}`}>
-            <div className='flex items-center justify-center w-6'>
+          <div className={`flex justify-center sm:justify-start items-center gap-2 p-2 rounded-md min-w-[150px] w-max sm:w-10/12 sm:mt-2 ${isActive('/summary')}`}>
+            <div className='flex items-center justify-center sm:w-6'>
               <i className='fa-solid fa-compress'></i>
             </div>
-            <h2>Text Summary</h2>
+            <h2>Text Summarizer</h2>
           </div>
         </Link>
 
         <Link to="/paragraph" className='flex justify-center w-full'>
-          <div className={`flex items-center gap-2 p-2 rounded-md w-10/12 mt-1 ${isActive('/paragraph')}`}>
+          <div className={`flex justify-center sm:justify-start items-center gap-2 p-2 rounded-md min-w-[200px] sm:w-10/12 sm:mt-2  ${isActive('/paragraph')}`}>
             <div className='flex items-center justify-center w-6'>
               <i className='fa-solid fa-pencil'></i>
             </div>
-            <h2>Generate Paragraph</h2>
+            <h2>Paragraph Generator</h2>
           </div>
         </Link>
 
         <Link to="/chatbot" className='flex justify-center w-full'>
-          <div className={`flex items-center gap-2 p-2 rounded-md w-10/12 mt-1 ${isActive('/chatbot')}`}>
+          <div className={`flex justify-center sm:justify-start items-center gap-2 p-2 rounded-md min-w-[180px] sm:w-10/12 sm:mt-2 ${isActive('/chatbot')}`}>
             <div className='flex items-center justify-center w-6'>
               <i className='fa-solid fa-robot'></i>
             </div>
@@ -58,7 +58,7 @@ const Sidebar = () => {
         </Link>
 
         <Link to="/js-converter" className='flex justify-center w-full'>
-          <div className={`flex items-center gap-2 p-2 rounded-md w-10/12 mt-1 ${isActive('/js-converter')}`}>
+          <div className={`flex justify-center sm:justify-start items-center gap-2 p-2 rounded-md min-w-[180px] sm:w-10/12 sm:mt-2 ${isActive('/js-converter')}`}>
             <div className='flex items-center justify-center w-6'>
               <i className='fa-solid fa-code'></i>
             </div>
@@ -67,7 +67,7 @@ const Sidebar = () => {
         </Link>
 
         <Link to="/scifi-img" className='flex justify-center w-full'>
-          <div className={`flex items-center gap-2 p-2 rounded-md w-10/12 mt-1 ${isActive('/scifi-img')}`}>
+          <div className={`flex justify-center sm:justify-start items-center gap-2 p-2 rounded-md min-w-[180px] sm:w-10/12 sm:mt-2 ${isActive('/scifi-img')}`}>
             <div className='flex items-center justify-center w-6'>
               <i className='fa-solid fa-image'></i>
             </div>
