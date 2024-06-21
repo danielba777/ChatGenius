@@ -13,7 +13,12 @@ app.use(bodyParser.json({
     }
 }));
 
-app.use(cors())
+// CORS Configuration  
+app.use(cors({
+    origin: 'https://chatgenius.netlify.app', 
+    optionsSuccessStatus: 200
+}));
+
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json({ extended: true }))
