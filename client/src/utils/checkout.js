@@ -7,15 +7,15 @@ export const handleCheckout = async (e, navigate, setError) => {
     e.preventDefault()
     if(localStorage.getItem("authToken")){
       try {
-        const token = await axios.get("/api/auth/refresh-token")
+        const token = await axios.get("https://chatgenius.onrender.com/api/auth/refresh-token")
         if (token.data) {
           const config = { headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token.data}` }}
-          const sub = await axios.get("/api/auth/subscription", config)
+          const sub = await axios.get("https://chatgenius.onrender.com/api/auth/subscription", config)
           
           if (sub.subscription) {
             navigate("/summary")
           } else {
-            const session = await axios.post("/api/stripe/checkout", { priceId: "price_1PTJhJELfChOnqY8pLgcoVlG", sub: "normal" }, config)
+            const session = await axios.post("https://chatgenius.onrender.com/api/stripe/checkout", { priceId: "price_1PTJhJELfChOnqY8pLgcoVlG", sub: "normal" }, config)
 
             if (session.data) {
               window.open(session.data.url, "_self")

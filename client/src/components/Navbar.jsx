@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const logoutHandler = async () => {
     try {
-      await axios.post("/api/auth/logout").then(res => fullyLogout(res.data))
+      await axios.post("https://chatgenius.onrender.com/api/auth/logout").then(res => fullyLogout(res.data))
     } catch (err) {
       console.log(err)
     }
@@ -31,14 +31,14 @@ const Navbar = () => {
 
   const checkRefresh = async () => {
     try {
-      const token = await axios.get("/api/auth/refresh-token")
+      const token = await axios.get("https://chatgenius.onrender.com/api/auth/refresh-token")
       if (!token.data) {
         localStorage.removeItem('authToken')
         setLoggedIn(false)
         logoutHandler()
       } else {
         const config = { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token.data}` } }
-        await axios.get("/api/auth/subscription", config).then(res => checkSub(res.data))
+        await axios.get("https://chatgenius.onrender.com/api/auth/subscription", config).then(res => checkSub(res.data))
         setLoggedIn(true)
       }
     } catch (err) {
@@ -56,14 +56,14 @@ const Navbar = () => {
 
   const createPortal = async () => {
     try {
-      const token = await axios.get("/api/auth/refresh-token")
+      const token = await axios.get("https://chatgenius.onrender.com/api/auth/refresh-token")
 
       if (token.data) {
         const config = { headers: {"Content-Type": "application/json", Authorization: `Bearer ${token.data}`}}
-        const customerId = await axios.get("/api/auth/customer", config)
+        const customerId = await axios.get("https://chatgenius.onrender.com/api/auth/customer", config)
 
         if (customerId.data.customerId) {
-          const portal = await axios.post("/api/stripe/portal", { customerId: customerId.data.customerId }, config)
+          const portal = await axios.post("https://chatgenius.onrender.com/api/stripe/portal", { customerId: customerId.data.customerId }, config)
 
           if (portal.data.url) {
             window.open(portal.data.url, "_self")

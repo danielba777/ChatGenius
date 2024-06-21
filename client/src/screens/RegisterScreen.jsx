@@ -20,7 +20,7 @@ const RegisterScreen = () => {
     e.preventDefault()
     
     try {
-      await axios.post("/api/auth/register", {username, email, password}, config)
+      await axios.post("https://chatgenius.onrender.com/api/auth/register", {username, email, password}, config)
       navigate("/login")
 
     } catch (err) {

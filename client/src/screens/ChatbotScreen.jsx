@@ -13,7 +13,7 @@ const ChatbotScreen = () => {
     const newMessage = { text: text, sender: 'user' }
     setMessages([...messages, newMessage])
     try {
-      const { data } = await axios.post("/api/openai/chatbot", { text })
+      const { data } = await axios.post("https://chatgenius.onrender.com/api/openai/chatbot", { text })
       setMessages(prev => [...prev, { text: data, sender: 'bot' }])
       setText('')
     } catch (err) {

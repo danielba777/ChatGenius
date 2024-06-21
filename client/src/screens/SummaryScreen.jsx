@@ -14,7 +14,7 @@ const SummaryScreen = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const { data } = await axios.post("/api/openai/summary", { text })
+      const { data } = await axios.post("https://chatgenius.onrender.com/api/openai/summary", { text })
       setSummary(data)
       setIsLoading(false)
     } catch (err) {

@@ -14,7 +14,7 @@ const ScifiScreen = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const { data } = await axios.post("/api/openai/scifi-img", { text })
+      const { data } = await axios.post("https://chatgenius.onrender.com/api/openai/scifi-img", { text })
       setImage(data)
       setIsLoading(false)
     } catch (err) {

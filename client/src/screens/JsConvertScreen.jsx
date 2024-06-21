@@ -14,7 +14,7 @@ const JsConvertScreen = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const { data } = await axios.post("/api/openai/js-converter", { text })
+      const { data } = await axios.post("https://chatgenius.onrender.com/api/openai/js-converter", { text })
       setCode(data)
       setIsLoading(false)
     } catch (err) {
