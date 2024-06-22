@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Sidebar from '../components/Sidebar'
+import { toast } from 'react-toastify'
 
 const ChatbotScreen = () => {
   const [text, setText] = useState('')
-  const [error, setError] = useState('')
   const [messages, setMessages] = useState([])
 
   const submitHandler = async (e) => {
@@ -19,8 +19,7 @@ const ChatbotScreen = () => {
     } catch (err) {
       console.log(err)
       const errorMsg = err.response && err.response.data.error ? err.response.data.error : err.message
-      setError(errorMsg)
-      setTimeout(() => setError(""), 5000)
+      toast.error(errorMsg)
     }
   }
 

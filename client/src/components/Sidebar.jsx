@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { handleCheckout } from '../utils/checkout'
 import { checkSubscription } from '../utils/checkSubscription'
+import { toast } from 'react-toastify'
 
 const Sidebar = () => {
 
@@ -22,6 +23,12 @@ const Sidebar = () => {
 
       fetchSubscription()
     },[])
+
+    useEffect(() => {
+      if (error) {
+        toast.error(error)
+      }
+    },[error])
 
   return (
     <div className='flex flex-row sm:flex-col justify-between sm:w-[250px] sm:h-[calc(100vh-64px)] bg-slate-200'>

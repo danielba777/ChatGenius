@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { handleCheckout } from '../utils/checkout'
 import { checkSubscription } from '../utils/checkSubscription'
+import { toast } from 'react-toastify'
 
 const HomeScreen = () => {
   const titles = [
@@ -53,6 +54,12 @@ const HomeScreen = () => {
 
     fetchSubscription()
   }, []);
+
+  useEffect(() =>{
+    if (error) {
+      toast.error(error)
+    }
+  },[error])
 
   return (
     <div className='flex'>
