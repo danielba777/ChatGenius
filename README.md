@@ -36,7 +36,7 @@ ChatGenius is a web application built with the MERN stack. It features a text su
 # Account with activated subscription
 test@email.com
 P: 123456
-
+```
 -- OR -- 
 
 **Try to checkout with this dummy data:**
@@ -44,8 +44,6 @@ P: 123456
 Credit Card Number: *4242 4242 4242 4242*
 
 Choose any secret and date (in the future)  
-
-```
 
 # Usage
 
