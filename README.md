@@ -43,7 +43,7 @@ P: 123456
 
 Credit Card Number: *4242 4242 4242 4242*
 
-Choose any secret and date (in the future)  
+Choose any name, secret key and date (in the future)  
 
 # Usage
 
