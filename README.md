@@ -26,10 +26,10 @@ ChatGenius is a web application built with the MERN stack. It features a text su
   + Utilizes MongoDB, Express.js, React.js, and Node.js for robust performance and scalability.
 * Stripe API Integration:
   + Secure and seamless payment processing.
-	+ Supports subscription management and transactions.
+  + Supports subscription management and transactions.
 * OpenAI API Integration:
   + Leverages advanced AI models for text and image generation.
-	+ Ensures high-quality and relevant content output.
+  + Ensures high-quality and relevant content output.
 
 # Test User Accounts
 ```
