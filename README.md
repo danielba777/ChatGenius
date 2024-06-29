@@ -39,7 +39,7 @@ ChatGenius is a web application built with the MERN stack. It features a text su
 test@email.com
 P: 123456
 ```
---- OR --- 
+-- OR --
 
 **Try to checkout with this dummy data:**
 
